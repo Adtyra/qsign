@@ -1,0 +1,93 @@
+{% extends "base.html" %}{% block title %}Qsign{% endblock %}{% block content
+  %}
+
+<html lang="en">
+
+<body>
+  <main id="main">
+ <!-- ======= Contact Section ======= -->
+    <section id="hero" class="hero d-flex">
+
+      <div class="container" data-aos="fade-in">
+        <p class="text-white">.</p>
+        <header class="section-header">
+          <h2></h2>
+          <p>Verifikasi Tanda Tangan Digital</p>
+        </header> 
+        <form action="verifikasi_qr" enctype="multipart/form-data" method="POST">
+          <div class="border border-primary gap-100 p-3" >   
+            <div class="row" style="min-height: 600px;">
+              {% if arthas == '1' %}
+              <div class="col-lg-7 align-items-center" style="text-align: center;" >
+                <embed src="{{ url_for('static',filename='upload/file/'+id_t+'.pdf')}}" type="application/pdf" width="100%" height="100%">
+                  <input type="hidden" class="form-control text-white" name="file" value="{{id_t}}.pdf">               
+                </div>
+              {% else %}
+              <div class="col-lg-7 align-items-center" style="text-align: center;">
+                <img src="{{ url_for('static',filename='assets/img/stamp/nofound.png')}}" type="image/png" width="100%" height="100%">
+              </div>
+              {% endif %}
+              <div class="col-lg-5">
+                <header class="section-header">
+                  <br>
+                  <p style="text-align:center">Kunci Publik</p>
+                  </header>
+                <div class="row gy-4">
+                  <div class="col-md-12">
+                    <br>
+                    <input type="text" id="cpubkey1" name="cpubkey1" class="form-control" placeholder="Tempel Kunci Publik">
+                  </div>          
+                    <div class="col-md-12 d-flex justify-content-center">
+                      <h3 class="text-primary" >Atau</h3>
+                    </div>
+                    <div class="col-md-12">
+                      <select class="custom-select form-control" name="cpubkey2" id="cpubkey2" onchange="val()">               
+                      {% if session['loggedin'] == True %}                   
+                      <option value ="" selected disabled>Pilih Dari Daftar Kunci</option>
+                      {% for data in data_k %}
+                      <option value="{{data.kuncipublik}}">{{data.namauser}}</option>
+                      {% endfor %}             
+                      {% else %}
+                      <option value ="" style="text-align: center;" selected>Anda Tidak Login</option>
+                      {% endif %}
+                      </select>
+                    </div>
+                
+                  <div class="col-md-12 d-flex justify-content-center">
+                          <!--   <button type="submit" href="7vttd.html"">Verifikasi Tanda Tangan</button> -->
+                    <button class="btn btn-primary" type="submit">Verifikasi Tanda Tangan</button>
+                  </div>
+                </div>
+              </div>
+            </div>  
+
+          </div>
+        </form>
+      </div>
+    </section><!-- End Contact Section -->
+  </main>
+</body>
+
+</html>
+
+
+<script>
+  function someFunc1() {
+    document.getElementById("setfile").addEventListener("click", selectfile);
+    document.getElementById('file').click()
+    document.getElementById('start').click()
+  }
+  function val() {
+    var d = document.getElementById("cpubkey2").value;
+    var y = document.getElementById("cpubkey1");
+
+    if (d !== "") {
+      y.disabled = true;
+      y.value = "";
+      y.style.color = "red";
+    } else {
+      y.style.color = "green";
+    }
+  }
+ </script>
+  {% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}{% block title %}Qsign{% endblock %}{% block content
+  %}
+  <!DOCTYPE html>
+  <html lang="en">
+  
+  <body>
+  <!-- Modal -->
+
+  <main>
+    <section id="hero" class="hero d-flex align-items-center">
+      <div class="container">
+        <div class="d-flex justify-content-center py-4">
+          <a href="index" class="logo d-flex align-items-center w-auto">
+            <span class="d-none d-lg-block"><h1><u><i>Qsign</i></u></h1></span>
+          </a>
+        </div><!-- End Logo -->
+        <div class="row">
+          <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <div class="card mb-3">
+            <div class="card-body">
+
+              <div class="pt-1 pb-2" style="font-family:Nunito, sans-serif; ">
+                <h2 class="card-title text-center pb-2"><b><u>Login ke Akun Anda</u></b></h2>               
+              </div>
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{category}}" role="alert"> {{ message }}</div>    
+                    {% endfor %}
+                  {% endif %}
+              {% endwith %}
+              <form class="row g-3" action="masuk" method="POST" id="LoginForm" name ="LoginForm">
+                <div class="col-12">
+                  <label for="email" class="form-label">Email</label>
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input type="text" name="email" class="form-control" id="email" required>
+                    <div class="invalid-feedback">Ketik Email Anda</div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" name="password" class="form-control" id="password" required>
+                  <div class="invalid-feedback">Ketik Password Anda</div>
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-primary w-100" type="submit">Login</button>
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                  <p class="small mb-0">Belum Punya Akun? <a href="/daftar">Daftar</a></p>
+                </div>
+              </form>
+            </div>
+            </div>
+          </div>
+        
+     
+          <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+            <img src="static/assets/img/hero-img.png" class="img-fluid" alt="">
+          </div>
+        </div>
+      </div>
+  
+    </section><!-- End Home -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+</body>
+
+</html>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}{% block title %}Qsign{% endblock %}{% block content
+  %}
+
+<html lang="en">
+<script>
+
+    document.getElementById("setfile");
+    document.getElementById('file').click()
+    document.getElementById('start').click()
+
+  </script>s
+
+
+<body>
+  <div class="container">
+  <main>
+ <!-- ======= Contact Section ======= --><br><br><br><br>
+ <div class="container" data-aos="fade-in">
+    <p class="text-white">.</p>
+    <header class="section-header">
+      <h2></h2>
+      <p>Buat Tanda Tangan Digital</p>
+    </header>
+   </div><br>
+    <form id="formdata" enctype="multipart/form-data" method="POST" action="dsign">
+    
+    
+      <div>
+          <div class="form-group">
+            <input type="hidden" id="region" name="region">
+            <input type="hidden" id="x1" name="x1">
+            <input type="hidden" id="x2" name="x2">
+            <input type="hidden" id="y1" name="y1">
+            <input type="hidden" id="y2" name="y2">
+            <input type="hidden" id="ycom" name="ycom">
+            <input type="hidden" id="sk" name="sk" value="{{ data.kunci_privat }}">
+            <input type="hidden" id="vk" name="vk" value="{{ data.kunci_publik }}">
+            <input type="hidden" class="form-control col-sm-2" id="id_p" name="id_p" value="{{data.id_p}}" required>
+            <input type="hidden" class="form-control col-sm-2" id="nama" name="nama" value="{{data.nama}}" required>
+            <input type="hidden" class="form-control col-sm-2" id="email" name="email" value="{{data.email}}" required>
+            <input type="hidden" class="form-control col-sm-2" id="namafile" name="namafile" value="{{namafile}}" required>
+          </div>
+            <div class="form-group row">
+              <label for="page" class="form-label control-label col-sm-4 p-2">PIlih Halaman yang Akan Di Tanda Tangan: </label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control col-sm-2" id="page" name="page" value="{{page}}" min="1" step="1" required>
+              </div>
+            </div>
+            <br>
+          <div class=" drag-area mx-auto">
+            <div class="drag-area p-5" >
+              <div class="icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+              </div>
+              <input type='file' style="opacity: 100;" class="custom-file-input text-white" id="file" name="file" accept=".pdf" value="{{data}}">               
+              <button type="button" id="start" hidden></button>
+          </div>
+
+
+          <div class="col-lg-8 d-flex align-items-center mb-2">
+            <div id="post_upload">
+              <h1 style="text-align: center;color:white;">Pilih area yang ingin ditandatangani.<br /><b></b></h1>
+              <p style="text-align: center;color:white;">--------------</p>
+              <u style="text-align: left;color:white;">*Catatan</u>
+              <p style="text-align: left;color:white;">  
+              <b>Dokumen yang tidak menggunakan orientasi portrait dan berukuran A4 dapat menyebabkan peletakan yang tidak sesuai</b></p>
+              <div style="text-align:center;">
+                <canvas style="border:1px solid #000000;text-align:center" id="pgCanvas"></canvas><br>
+              </div>
+              <span><button id="area" class="btn btn-tw btn-outline-secondary">Pilih Area</button><button id="submit1" type="submit" style="margin-left: 10px;" class="btn btn-tw btn-danger" disabled>Selesai</button></span>
+            </div>
+          </div>
+              </div>
+                  </div>
+        </form>
+
+     
+
+</main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.5.207/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.5.207/pdf.worker.entry.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.5.207/pdf.worker.min.js"></script>
+
+<script src="{{ url_for('static', filename='assets/js/sign.js') }}"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.5.207/pdf_viewer.min.css"
+      crossorigin="anonymous"/>
+
+
+</div>
+</body>
+</html>
+{% endblock %}

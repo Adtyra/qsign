@@ -1,0 +1,92 @@
+{% extends "base.html" %}{% block title %}Qsign{% endblock %}{% block content
+  %}
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+  <main id="main">
+ <!-- ======= Contact Section ======= -->
+ <section id="hero" class="hero d-flex">
+
+  <div class="container" data-aos="fade-in">
+    <p class="text-white">.</p>
+    <header class="section-header">
+      <h2></h2>
+      <p>Verifikasi Tanda Tangan Digital</p>
+    </header> 
+<form action="hasil_verifikasi" enctype="multipart/form-data" method="POST">
+    <div class="row gy-4">
+      <div class="col-lg-6">
+        <div class=" drag-area mx-auto">
+          <div class="drag-area p-5" >
+            <div class="icon">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <input type='file' style="opacity: 100;" class="custom-file-input text-white" id="file" name="file" accept=".pdf" onchange="someFunc1()">               
+            <button type="button" id="start" hidden></button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="row gy-4">
+          <div class="col-md-12">
+            <br><br>
+            <input type="text" id="cpubkey1" name="cpubkey1" class="form-control" placeholder="Tempel Kunci Publik">
+          </div>
+          
+            <div class="col-md-12 d-flex justify-content-center">
+              <h3 class="text-primary" >Atau</h3>
+            </div>
+            <div class="col-md-12">
+              <select class="custom-select form-control" name="cpubkey2" id="cpubkey2" onchange="val()">
+                 
+              {% if session['loggedin'] == True %}                   
+              <option value ="" selected disabled>Pilih Dari Daftar Kunci</option>
+              {% for data in data_k %}
+              <option value="{{data.kuncipublik}}">{{data.namauser}}</option>
+              {% endfor %}
+              
+              {% else %}
+              <option value ="" style="text-align: center;" selected>Login untuk menggunakan daftar kunci</option>
+              {% endif %}
+              </select>
+            </div>
+         
+          <div class="col-md-12 d-flex justify-content-center">
+                  <!--   <button type="submit" href="7vttd.html"">Verifikasi Tanda Tangan</button> -->
+            <button class="btn btn-primary" type="submit">Verifikasi Tanda Tangan</button>
+          </div>
+        </div>
+      </div>
+    </div>  
+</form>
+  </div>
+
+</section><!-- End Contact Section -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+</body>
+
+</html>
+
+
+<script>
+  function someFunc1() {
+    document.getElementById("setfile").addEventListener("click", selectfile);
+    document.getElementById('file').click()
+    document.getElementById('start').click()
+  }
+  function val() {
+    var d = document.getElementById("cpubkey2").value;
+    var y = document.getElementById("cpubkey1");
+
+    if (d !== "") {
+      y.disabled = true;
+      y.value = "";
+      y.style.color = "red";
+    } else {
+      y.style.color = "green";
+    }
+  }
+  </script>
+  {% endblock %}

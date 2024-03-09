@@ -1,0 +1,293 @@
+{% extends "base.html" %}{% block title %}Qsign{% endblock %}{% block content
+  %}
+
+<html lang="en">
+<body>
+  <main id="main">
+ <!-- ======= Contact Section ======= -->
+ <section id="contact" class="contact">
+ <!-- dayre={{ dayre }}-lumin={{ lumin }}-arthas={{ arthas }}-->
+{% if dayre == '2' %}
+  <div class="container" data-aos="fade-in">
+   <br><br>
+    <div class="border border-primary gap-100 p-3">   
+      <div class="row">
+          <div class="col-lg-7 align-items-center" style="text-align: center;">
+            <object data="{{ url_for('static',filename='upload/file/'+nfile)}}" type="application/pdf" width="100%" height="100%"></object>
+          </div>
+        <div class="col-lg-5">
+          <header class="section-header">
+          <br>
+          <p style="text-align:center">Informasi Dokumen</p>
+          </header>
+          <form method="POST" action="bbttd/{{id_t}}" enctype="multipart/form-data">
+            <div class="p-4">
+              {% if uttd.nsig >= 1  %}
+                {% for user in usign %}     
+                  {% if (uttd.uid1 == user.id_p) and (uttd.uid1 != 0) %}
+                  <div class="border border-secondary p-2">                    
+                  <div class="d-flex align-items-center mb-2">                        
+                    <h4>Penandatangan 1</h4>                                        
+                  </div>                     
+                  <div class="col d-flex align-items-center ">  
+                    <input type="text" class="form-control" id="namauser" name="namauser" style="font-size:20px;" value="{{user.nama}}" disabled>    
+                    <a href="chprofil/{{user.id_p}}" class="btn btn-outline-primary d-flex align-items-center"><i class="bi bi-person-circle fa-fw" style="margin-right:3px"></i>Profil</a>                    
+                  </div>                     
+                  <br>                       
+                  <div class="d-flex align-items-center mb-2">                          
+                    <h4>Ditandatangan Pada</h4>                                       
+                  </div>                      
+                  <div class="col d-flex align-items-center ">                             
+                    <input type="text" class="form-control" style="font-size:20px;" id="waktu" name="waktu"  value="{{uttd.tsig1}}" disabled>                          
+                  </div>    
+                </div>  
+                  {% else %} 
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+              {% endif %}
+              {% if uttd.nsig >= 2 %}
+                {% for user in usign %}     
+                  {% if (uttd.uid2 == user.id_p) and (uttd.uid2 != 0) %}
+                  <br>
+                  <div class="border border-secondary p-2">  
+                  <div class="d-flex align-items-center mb-2">
+                    <h4>Penandatangan 2</h4>                  
+                  </div>
+                  <div class="col d-flex align-items-center ">                     
+                    <input type="text" class="form-control" id="namauser" name="namauser" style="font-size:20px;" value="{{user.nama}}" disabled>                  
+                    <a href="chprofil/{{user.id_p}}" class="btn btn-outline-primary d-flex align-items-center"><i class="bi bi-person-circle fa-fw" style="margin-right:3px"></i>Profil</a>    
+                  </div>      
+                  <br>               
+                  <div class="d-flex align-items-center mb-2">                       
+                    <h4>Ditandatangan Pada</h4>                                     
+                  </div>                   
+                  <div class="col d-flex align-items-center ">    
+                    <input type="text" class="form-control" style="font-size:20px;" id="waktu" name="waktu"  value="{{uttd.tsig2}}" disabled>      
+                  </div>    
+                </div>
+                  {% else %} 
+                  {% endif %}
+                {% endfor %}
+              {% else %} 
+              {% endif %}
+              {% if uttd.nsig >= 3 %}
+                {% for user in usign %}     
+                  {% if (uttd.uid3 == user.id_p) and (uttd.uid3 != 0) %}
+                  <br>
+                  <div class="border border-secondary p-2">  
+                  <div class="d-flex align-items-center mb-2">  
+                    <h4>Penandatangan 3</h4>   
+                  </div>   
+                  <div class="col d-flex align-items-center ">
+                    <input type="text" class="form-control" id="namauser" name="namauser" style="font-size:20px;" value="{{user.nama}}" disabled>  
+                    <a href="chprofil/{{user.id_p}}" class="btn btn-outline-primary d-flex align-items-center"><i class="bi bi-person-circle fa-fw" style="margin-right:3px"></i>Profil</a>
+                  </div>
+                  <br>  
+                  <div class="d-flex align-items-center mb-2">
+                    <h4>Ditandatangan Pada</h4>                  
+                  </div>
+                  <div class="col d-flex align-items-center ">
+                    <input type="text" class="form-control" style="font-size:20px;" id="waktu" name="waktu"  value="{{uttd.tsig3}}" disabled>
+                  </div>   
+                </div>  	
+                  {% else %} 
+                  {% endif %}
+                {% endfor %}
+              {% else %} 
+              {% endif %}
+              {% if uttd.nsig >= 4 %}
+                {% for user in usign %}     
+                  {% if (uttd.uid4 == user.id_p) and (uttd.uid4 != 0) %}
+                  <br> 
+                  <div class="border border-secondary p-2">  
+                  <div class="d-flex align-items-center mb-2">
+                    <h4>Penandatangan 4</h4>                  
+                  </div>
+                  <div class="col d-flex align-items-center ">
+                    <input type="text" class="form-control" id="namauser" name="namauser" style="font-size:20px;" value="{{user.nama}}" disabled>
+                    <a href="chprofil/{{user.id_p}}" class="btn btn-outline-primary d-flex align-items-center"><i class="bi bi-person-circle fa-fw" style="margin-right:3px"></i>Profil</a>
+                  </div>
+                  <br>
+                  <div class="d-flex align-items-center mb-2">
+                    <h4>Ditandatangan Pada</h4>                  
+                  </div>
+                  <div class="col d-flex align-items-center ">
+                    <input type="text" class="form-control" style="font-size:20px;" id="waktu" name="waktu"  value="{{uttd.tsig4}}" disabled>
+                  </div>  
+                </div>  
+                  {% else %} 
+                  {% endif %}
+                {% endfor %}
+              {% else %} 
+              {% endif %}
+            </div>
+            <div class="p-4">
+              <div class="d-flex align-items-center mb-2">
+                <h4>Nama Dokumen</h4>                  
+              </div>	   
+              <div class="col d-flex align-items-center ">
+                <input type="text" class="form-control" id="namafile" name="namafile" style="font-size:20px;" value="{{uttd.filename}}" disabled>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="d-flex align-items-center mb-2">
+                <h4>Status Tanda Tangan</h4>
+              </div>
+            <div class="col d-flex align-items-center ">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                    <input type="text" style="font-size:25px;text-align:center;" class="form-control" name="hasil" id="hasil" value="{{ message }}" disabled>                      
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
+            </div>
+            <div class="col d-flex align-items-center "> 
+              {% if lumin == '1' %}  
+                <input type="hidden" class="form-control" id="lumina" style="color:rgb(0, 253, 17);text-align: center;font-size:25px;" value="OK" disabled>
+              {% else %}
+                <input type="text"   class="form-control" id="lumina" style="color:red;text-align: center;font-size:25px;" value="Nama Dokumen Diubah" disabled>
+              {% endif %}
+            </div>
+            </div>
+            <div class="col-md-12 text-center p-5">
+              <div class="d-grid gap-20 col-md-12 text-center">
+                <a  href="bbttd/{{id_t}}" class="btn btn-primary">Unduh Dokumen</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="container" data-aos="fade-in">
+    <p class="text-white">.</p>
+    <p class="text-white">.</p>
+    <div class="border border-primary gap-100 p-3">   
+      <div class="row">
+        {% if arthas == '1' %}
+          <div class="col-lg-7 align-items-center" style="text-align: center;">
+            <object data="{{ url_for('static',filename='upload/file/'+nfile)}}" type="application/pdf" width="100%" height="100%"></object>
+          </div>
+        {% else %}
+        <div class="col-lg-7 align-items-center" style="text-align: center;">
+          <img src="{{ url_for('static',filename='assets/img/stamp/nofound.png')}}" type="image/png" width="100%" height="100%">
+        </div>
+        {% endif %}
+        <div class="col-lg-5">
+          <header class="section-header">
+          <br>
+          <p style="text-align:center">Informasi Dokumen</p>
+          </header>
+        <form method="POST" action="bbttd/{{id_t}}" enctype="multipart/form-data">
+            <div class="p-4">
+              <div class="d-flex align-items-center mb-2">
+                <h4>Penandatangan</h4>                  
+              </div>	   
+              <div class="col d-flex align-items-center ">
+                {% if arthas == '1' %}
+                  {% for user in usign %}     
+                    {% if uttd.id_p == user.id_p %}
+                    <input type="text" class="form-control" id="namauser" name="namauser" style="font-size:20px;" value="{{user.nama}}" disabled>
+                    <a href="chprofil/{{user.id_p}}" class="btn btn-outline-primary d-flex align-items-center"><i class="bi bi-person-circle fa-fw" style="margin-right:3px"></i>Profil</a>
+                    {% else %} 
+                    {% endif %}
+                  {% endfor %}
+                {% else %}
+                <input type="text" class="form-control" id="namauser" name="namauser" style="color:red;text-align: center;font-size:25px;" value="Tidak Ditemukan" disabled>
+                {% endif %}
+              </div>	
+            </div>
+            <div class="p-4">
+                <div class="d-flex align-items-center mb-2">
+                <h4>Nama Dokumen</h4>                  
+              </div>	   
+              <div class="col d-flex align-items-center ">
+                {% if arthas == '1' %}
+                  {% for user in usign %}     
+                    {% if uttd.id_p == user.id_p %}
+                    <input type="text" class="form-control" id="namafile" name="namafile" style="font-size:20px;" value="{{uttd.namafile}}" disabled>
+                    {% else %} 
+                    {% endif %}
+                  {% endfor %}
+                {% else %}
+                <input type="text" class="form-control" id="namauser" name="namauser" style="color:red;text-align: center;font-size:25px;" value="Tidak Ditemukan" disabled>
+                {% endif %}
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="d-flex align-items-center mb-2">
+                <h4>Dibuat Pada</h4>                  
+              </div>
+                {% if arthas == '1' %}
+                <div class="col d-flex align-items-center ">
+                    <input type="text" class="form-control" style="font-size:20px;" id="waktu" name="waktu"  value="Date :   {{tgl}}" disabled>
+                </div>    
+                <div class="col d-flex align-items-center ">    
+                    <input type="text" class="form-control" style="font-size:20px;" id="waktu" name="waktu"  value="Time :   {{wkt}} WIB" disabled>
+                </div>
+                {% else %}
+                <div class="col d-flex align-items-center ">
+                <input type="text" class="form-control" id="waktu" name="waktu" style="font-size:25px;color:red;text-align:center;font-size:25px;" value="Tidak Ditemukan" disabled>
+                </div>
+                {% endif %}
+            </div>	
+            <div class="p-4">
+              <div class="d-flex align-items-center mb-2">
+                <h4>Status Tanda Tangan</h4>
+              </div>
+              <div class="col d-flex align-items-center ">
+              
+                  {% with messages = get_flashed_messages(with_categories=true) %}
+                      {% if messages %}
+                        {% for category, message in messages %}
+                              <input type="text" style="font-size:25px;text-align:center;" class="form-control" name="hasil" id="hasil" value="{{ message }}" disabled>                      
+                              {% endfor %}
+                      {% endif %}
+                  {% endwith %}
+              </div>
+              <div class="col d-flex align-items-center "> 
+                {% if lumin == '1' %}  
+                <input type="hidden" class="form-control" id="lumina" style="color:rgb(0, 253, 17);text-align: center;font-size:25px;" value="OK" disabled>
+                {% else %}
+                <input type="text"   class="form-control" id="lumina" style="color:red;text-align: center;font-size:25px;" value="Nama File Diubah" disabled>
+                {% endif %}
+            	</div>
+            </div>
+            <div class="col-md-12 text-center p-5">
+              <div class="d-grid gap-20 col-md-12 text-center">
+                {% if arthas == '1' %}
+                <a  href="bbttd/{{id_t}}" class="btn btn-primary">Unduh</a>
+                {% else %}
+                {% endif %}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}       
+</section><!-- End Contact Section -->
+  </main><!-- End #main -->
+</body>
+</html>
+<script>
+  var x = document.getElementById("hasil");
+  if (x.value =='File Asli'){
+      x.style.color = "green";
+    } else {
+      x.style.color = "red";
+    }
+  var y = document.getElementById("lumina");
+  var z = document.getElementById("namafile");
+  if (y.value =='OK'){
+      z.style.color = "green";
+    } else {
+      z.style.color = "red";
+    }
+
+</script>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}{% block title %}Qsign{% endblock %}{% block content
+  %}
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+  <!-- ======= Header ======= -->
+  
+
+ <!-- ======= Features Section ======= -->
+ <section id="features" class="features">
+
+  <div class="container" data-aos="fade-up">
+
+    <header class="section-header">
+      <h2></h2>
+      <p></p>
+    </header>
+
+
+    <!-- Feature Tabs -->
+    <div class="row feture-tabs border border-primary p-4 bg-light"  data-aos="fade-up">
+      <div class="col-lg-4 ">
+        <img src="{{ url_for('static',filename='/upload/foto/'+user.foto)}}" class="img-fluid rounded mx-auto d-block " alt="">
+        <div class=" drag-area2 mx-auto">
+        </div>
+    </div>
+
+      <div class="col-lg-8" style="background-color: rgb(238, 238, 238)">
+        <h3 style="color:#4154f1;"><u>Profil Pengguna</u></h3>
+          <div class=" fade show active" id="tab1">
+            <p></p>
+            <div class="p-2">
+              <div class="d-flex align-items-center mb-2">
+               <h4 style="color:#4154f1;">Nama</h4>      
+              </div>	    
+              <div class="col">
+                <input type="text" class="form-control" id="nama" name="nama" value="{{user.nama}}" disabled>
+              </div>	
+            </div>
+
+            <div class="p-2">
+              <div class="d-flex align-items-center mb-2">
+                <h4 style="color:#4154f1;">Email</h4>
+              </div>
+              <div class="col">
+                {% if user.hidemail =="1" %}
+                <input type="text" class="form-control" id="email" name="email" value="{{user.email}}" disabled>
+                {% else %}
+                <input type="text" class="form-control" id="email" name="email" value="********************" disabled>
+                {% endif%}
+              </div>	  
+            </div>
+            <div class="p-2">
+              <div class="d-flex align-items-center mb-2">
+                <h4 style="color:#4154f1;">Tentang Pengguna</h4>
+              </div>
+              <div class="col p-2 ">
+                <textarea id="bui" name="bio" rows="5" class="form-control"style="overflow-y: scroll" disabled>{{user.bio}}</textarea>
+              </div>	 
+            </div>
+          </div><!-- End Tab 1 Content -->
+      </div>
+    </div><!-- End Feature Tabs -->
+    </section><!-- End Services Section -->
+
+  </main><!-- End #main -->
+
+  {% endblock %}

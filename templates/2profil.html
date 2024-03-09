@@ -1,0 +1,338 @@
+{% extends "base.html" %}{% block title %}Qsign{% endblock %}{% block content
+%}
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+ <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Perbarui Profil Pengguna</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="upprofil" method="post" enctype="multipart/form-data">	
+          <div class="form-group row p-2">   
+            <label class="col-sm-2  col-form-label">Nama</label>
+             <div class="col">
+                  <input type="text" name="modnama" class="form-control" value="{{ data.nama }}" required oninvalid="check(this)">
+                  <input type="hidden" name="modps" class="form-control" value="{{ data.password }}" required>			 
+                  <input type="hidden" name="modfoto" class="form-control" value="{{ data.foto }}" required>			 
+                  <input type="hidden" name="modsk" class="form-control" value="{{ data.kunci_privat }}" required>			 
+                  <input type="hidden" name="modvk" class="form-control" value="{{ data.kunci_publik }}" required>			 
+                  
+            </div>
+          </div>
+          <div class="form-group row p-2" >   
+            <label class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-4">
+                <input type="text" name="modmail" class="form-control"value="{{ data.email }}" required oninvalid="check(this)">			 
+              </div>
+              <div class="col-sm-1 p-2 d-flex justify-content-center" >
+                <div class="form-check d-flex justify-content-center" >
+                  {% if  session['hml'] == '1'%}
+                  <input class="form-check-input" type="checkbox" onchange="shpw()" nama="modml" id="modml" value="" checked>
+                  {% else %}
+                  <input class="form-check-input" type="checkbox" onchange="shpw()" nama="modml" id="modml" value="">
+                  {% endif %}
+                  
+
+                  <input type="hidden" name="modhl" id="modhl" class="form-control" value="{{ data.hidemail }}">			 
+                </div>
+              </div>
+              <div class="col-sm-5" >
+                <input type="text" nama="modml2" id="modml2" class="form-control" value="" disabled placeholder="Centang Untuk Menampilkan di Profil Umum">		
+              </div>
+            </div>
+        
+          <div class="form-group row p-2">   
+            <label class="col-sm-2  col-form-label">Tentang Pengguna</label>
+              <div class="col">	 
+                <textarea id="bui" name="modbio" rows="5" class="form-control"style="overflow-y: scroll"required oninvalid="check(this)">{{data.bio}}</textarea>
+              </div>
+          </div>    
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+   <!-- END Modal -->
+ <section id="features" class="features">
+
+  <div class="container" data-aos="fade-up">
+    <header class="section-header">
+    </header>
+    <!-- Tab Profil -->
+    <div class="row feture-tabs border border-primary p-4 bg-light"  data-aos="fade-in">
+        <div class="col-lg-4 ">
+            <img src="{{ url_for('static',filename='/upload/foto/'+session['foto'])}}" class="img-fluid rounded mx-auto d-block " alt="">
+            <div class=" drag-area2 mx-auto">
+              <form action ="fotobaru" method ="POST" enctype ="multipart/form-data">
+                <input type="hidden" name="umail" class="form-control"  value="{{ data.email }}">
+                <input type="hidden" name="unama" class="form-control"  value="{{ data.nama }}" >
+                <input type="hidden" name="ubio"  class="form-control"  value="{{ data.bio }}" >
+                <input type="hidden" name="ups"   class="form-control"  value="{{ data.password }}" >
+                <input type="hidden" name="usk"   class="form-control"  value="{{ data.kunci_privat }}">			 
+                <input type="hidden" name="uvk"   class="form-control"  value="{{ data.kunci_publik }}">
+                <input type="hidden" name="uml"   class="form-control"  value="{{ data.hidemail }}">		
+                <input type='file' style="opacity: 100;" class="custom-file-input2" id="getFile" accept="image/jpg,image/png,image/jpeg" name="ufoto" onchange="this.form.submit()">
+              </form>
+            </div>
+        </div>
+      
+
+      <div class="col-lg-8" style="background-color: rgb(238, 238, 238)">
+        <h3><u>Profil Pengguna</u></h3>
+        <!-- Tabs -->
+
+        <ul class="nav nav-pills mb-3">
+          <li>  
+            {% if pagetype== 'profil' %}
+            <a class="nav-link active" data-bs-toggle="pill" href="#tab1"><u>Data Pengguna</u></a>
+              {% else %}  
+              <a class="nav-link" data-bs-toggle="pill" href="#tab1"><u>Data Pengguna</u></a>
+              {% endif %}
+          </li>
+          <li>
+            {% if pagetype== 'kunci' %}
+            <a class="nav-link active" data-bs-toggle="pill" href="#tab2"><u>Data Kunci</u></a>
+            {% else %}  
+            <a class="nav-link" data-bs-toggle="pill" href="#tab2"><u>Data Kunci</u></a>
+            {% endif %}
+          </li>
+          <li>
+            {% if pagetype== 'password' %}
+            <a class="nav-link active" data-bs-toggle="pill" href="#tab3"><u>Reset Password</u></a>
+            {% else %}  
+            <a class="nav-link" data-bs-toggle="pill" href="#tab3"><u>Reset Password</u></a>
+            {% endif %}
+          </li>
+        </ul><!-- End Tabs --> 
+        
+        <!-- Tab Content -->
+        <div class="tab-content">
+          {% if pagetype== 'profil' %}
+          <div class="tab-pane fade show active" id="tab1">
+            {% else %}  
+            <div class="tab-pane fade show" id="tab1">
+              {% endif %}
+              <p></p>
+              <div class="p-2">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-eye-fill"></i>
+                  <h4>Nama</h4>      
+                </div>	    
+                <div class="col">
+                  <input type="text" class="form-control" id="nama" name="nama" value="{{ data.nama }}" disabled>
+                </div>	
+              </div>
+
+              <div class="p-2">
+                <div class="d-flex align-items-center mb-2">
+                  {% if  session['hml'] == '1'%}
+                  <i class="bi bi-eye-fill"></i>
+                  {% else %}
+                  <i class="bi bi-eye-slash-fill"></i>
+                  {% endif %}
+                  <h4>Email</h4>
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" id="name" name="name" value="{{ data.email }}" disabled>
+                </div>	
+              </div>
+            <div class="p-2">
+              <div class="d-flex align-items-center mb-2">
+                <i class="bi bi-eye-fill"></i>
+                <h4>Tentang Pengguna</h4>
+              </div>
+              <div class="col p-2 ">
+                <textarea id="bui" name="bio" rows="5" class="form-control"style="overflow-y: scroll" disabled>{{ data.bio }}</textarea>
+              </div>	 
+            </div>
+            <div class="p-2 clearfix">
+              <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">Perbarui</button>
+            </div>
+          </div><!-- End Tab 1 Content -->
+  
+          {% if pagetype== 'kunci' %}
+          <div class="tab-pane fade show active" id="tab2">
+            {% else %}  
+            <div class="tab-pane fade show" id="tab2">
+            {% endif %}
+            <p></p>
+            <form action="newkey" method="post" enctype="multipart/form-data">	
+            <div class="p-2">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-key-fill"></i>
+              <h4>Kunci Privat</h4>
+            </div>
+            <input type="hidden" name="dmail" class="form-control"  value="{{ data.email }}">
+            <input type="hidden" name="dnama" class="form-control"  value="{{ data.nama }}" >
+            <input type="hidden" name="dinst" class="form-control"  value="{{ data.foto }}" >
+            <input type="hidden" name="dbio"  class="form-control"  value="{{ data.bio }}" >
+            <input type="hidden" name="dps"   class="form-control"  value="{{ data.password }}" >		
+            <input type="hidden" name="dml"   class="form-control"  value="{{ data.hidemail }}">	
+            <div class="col d-flex align-items-center ">
+              <input type="text" class="form-control" id="kunci_privat" name="kunci_privat" value="{{sk}}" disabled>
+              <button type="button" onclick="copysk()" class="btn btn-outline-primary d-flex align-items-center"><i class="bi bi-clipboard2-fill"></i> Salin</button>
+             </div>
+            </div>
+            <div class="p-2">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-key"></i>
+              <h4>Kunci Publik</h4>
+            </div>
+            <div class="col d-flex align-items-center ">
+              <input type="text" class="form-control" id="kunci_publik" name="kunci_publik" value="{{vk}}" disabled>     
+              <button type="button" onclick="copyvk()"class="btn btn-outline-primary d-flex align-items-center"><i class="bi bi-clipboard2"></i> Salin</button>
+            </div>	
+            </div>
+            <div class="p-2 clearfix">
+              <button type="submit" class="btn btn-primary float-end">Refresh Kunci</button>
+            </div>
+          </form>
+   
+     
+          </div><!-- End Tab 2 Content -->
+          {% if pagetype == 'password' %}
+          <div class="tab-pane fade show active" id="tab3" name="tab3">
+            {% else %}  
+            <div class="tab-pane fade show" id="tab3" name="tab3">
+            {% endif %}
+            <div>
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'message' %}
+                          <div class="alert alert-warning" role="alert">
+                        {% else %}
+                          <div class="alert alert-{{ category }}" role="alert">
+                        {% endif %}
+                          {{ message }}
+                        </div>
+                    {% endfor %}
+                  {% endif %}
+              {% endwith %}
+            </div>
+            <form action="newpass" method="post" enctype="multipart/form-data">	
+            <input type="hidden" name="pmail" class="form-control"  value="{{ data.email }}">
+            <input type="hidden" name="pnama" class="form-control"  value="{{ data.nama }}" >
+            <input type="hidden" name="pinst" class="form-control"  value="{{ data.foto }}" >
+            <input type="hidden" name="pbio"  class="form-control"  value="{{ data.bio }}" >		 
+            <input type="hidden" name="psk"   class="form-control"  value="{{ data.kunci_privat }}">			 
+            <input type="hidden" name="pvk"   class="form-control"  value="{{ data.kunci_publik }}">	
+            <input type="hidden" name="pml"   class="form-control"  value="{{ data.hidemail }}">	
+            <div class="p-2">
+              <div class="d-flex align-items-center mb-2">
+                <i class="bi bi-lock"></i>
+                <h4>Password Baru</h4>
+              </div>
+              <div class="d-flex align-items-center">
+                <input type="password" class="form-control" id="pass1" name="pass1" value=""required>
+                <button type="button" class="btn btn-outline-primary d-flex align-items-center" onclick="shpw1()"><i class="bi bi-eye-fill" id="eyepw1"></i></button>  
+              </div>	 
+            </div>
+            <div class="p-2">
+              <div class="d-flex align-items-center mb-2">
+                <i class="bi bi-lock-fill"></i>
+                <h4>Ketik Ulang</h4>
+              </div>
+              <div class="d-flex align-items-center">
+                <input type="password" class="form-control" id="pass2" name="pass2" value=""required>
+                <button type="button" class="btn btn-outline-primary d-flex align-items-center" onclick="shpw2()"><i class="bi bi-eye-fill" id="eyepw2"></i></button>  
+              </div>	 
+              </div>
+              <div class="p-2 clearfix">
+                <button type="submit" class="btn btn-primary float-end">Reset</button>
+              </div>
+            </form>
+          </div><!-- End Tab 3 Content -->
+        </div>
+      </div>
+   
+    </div><!-- End Feature Tabs -->
+
+    </section><!-- End Services Section -->
+
+  </main><!-- End #main -->
+</body>
+
+</html>
+<script>
+      function acron() {
+        $('#rprofil').appendTo("body") 
+   }
+  function copysk() {
+    // Get the text field
+    var copyText = document.getElementById("kunci_privat");
+
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText.value);
+
+    // Alert the copied text
+    alert("Copied the text: " + copyText.value);
+  }
+  function copyvk() {
+    // Get the text field
+    var copyText = document.getElementById("kunci_publik");
+
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText.value);
+
+    // Alert the copied text
+    alert("Copied the text: " + copyText.value);
+  }
+
+  function shpw1() {
+    var x = document.getElementById("pass1");
+    var y = document.getElementById("eyepw1");
+    y.classList.toggle("bi-eye-slash-fill")
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+  function shpw2() {
+    var x = document.getElementById("pass2");
+    var y = document.getElementById("eyepw2");
+    y.classList.toggle("bi-eye-slash-fill")
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+
+  function shpw() {
+    var x = document.getElementById("modml");
+    var y = document.getElementById("modml2");
+    var z = document.getElementById("modhl");
+    if (x.checked) {
+      y.value = "Tampil di Profil";
+      y.style.color = "red";
+      x.value = "1";
+      z.value = "1";
+    } else {
+      y.value = "Tidak Tampil di Profil";
+      x.value = "0";
+      y.style.color = "green";
+      z.value = "0";
+    }
+  }
+  </script>
+{% endblock %}

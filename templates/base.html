@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    /> 
+      <meta content="" name="description">
+    
+      <meta content="" name="keywords">
+    
+      <!-- Favicons -->
+      <link href="static/assets/img/favicon.png" rel="icon">
+      <link href="static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    
+      <!-- Vendor CSS Files -->
+      <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+      <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+      <link href="static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+      <link href="static/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+      <link href="static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+      <link href="static/assets/vendor/dd/ddstyle.css" rel="stylesheet" >
+
+     
+
+      <!-- Template Main CSS File -->
+      <link href="static/assets/css/style.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <header id="header" class="header fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between" >
+      
+      <a href="/index" class="logo d-flex align-items-center" style='margin-left:1.25em'>
+        <img src="static/assets/img/logo.png" alt="">
+        <span>QSign</span>
+      </a>
+      
+      <nav id="navbar" class="navbar">
+        <ul> 
+          <li><a class="nav-link scrollto" href="/index">Home</a></li>
+          <li><a class="nav-link scrollto" href="/profil">Profil</a></li>
+          <li class="dropdown"><a href="#"><span>Tanda Tangan Digital</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>              
+              <li><a href="buat_ttd">Buat Tanda Tangan Digital</a></li>
+              <li><a href="/daftar_ttd">Daftar Tanda Tangan Digital</a></li>
+              <li><a href="/daftar_kunci">Daftar Kunci Publik</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Tanda Tangan Bersama</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>              
+              <li><a href="/multi_signature">Buat Tanda Tangan Bersama</a></li>
+              <li><a href="/co_signature">Tambah Tanda Tangan Bersama</a></li>
+              <li><a href="/multi_list">Daftar Tanda Tangan Bersama</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="/verifikasi">Verifikasi Tanda Tangan Digital</a></li>       
+        </ul> 
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    <div class="d-flex align-items-center justify-content-left">
+
+      {% if session['loggedin'] == True %} 
+       <!-- User -->
+       <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+        <ul class="navbar-nav flex-row align-items-center ms-auto">
+          <!-- Place this tag where you want the button to render. -->    
+       <div class="content">
+       <li class="nav-item navbar-dropdown dropdown-user dropdown">
+        <a class="nav-link hide-arrow" href="{{ url_for('static', filename='javascript:void(0);')}}" data-bs-toggle="dropdown">
+          <div class="avatar avatar-online">
+            <img src="{{ url_for('static',filename='upload/foto/'+session['foto'])}}" alt class="rounded-circle" style="width:40px;height:40px;" />
+          </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="#">
+              <div class="d-flex row align-items-center mx-auto text-center">
+                <div class="flex-shrink-0 me-3">
+                  <div class="avatar avatar-online">
+                    <img src="{{ url_for('static',filename='upload/foto/'+session['foto'])}}" alt class="rounded-circle" style="width:70px;height:70px;" />
+                  </div>
+                </div>
+                <div class="flex-grow-1">
+                  <span class="fw-semibold d-block">{{ session['nama'] }}</span>
+                </div>
+              </div>
+            </a>
+          </li>
+            <div class="dropdown-divider"></div>
+         
+          <li>
+            <a class="dropdown-item text-center" href="{{ url_for('auth.logout') }}">
+              <i class="bx bx-power-off me-2"></i>
+              <span class="align-middle">Log Out</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+       </ul>
+  </div>
+      <!--/ User --> 
+      {% else %}
+      <a class="btn btn-outline-primary p-2 d-flex align-items-center" href="/login" role="button">Login</a>
+      <a class="p-1"></a>
+      <a class="btn btn-outline-primary p-2 d-flex align-items-center" href="/daftar" role="button">Daftar</a>
+      {% endif %}
+      </div>
+    </div>
+  </header><!-- End Header -->
+<!--
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+-->
+    <div class="container">{% block content %} {% endblock %}</div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='index.js') }}"
+    ></script>
+
+    <!-- Vendor JS Files -->
+    <script src="static/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="static/assets/vendor/aos/aos.js"></script>
+    <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="static/assets/vendor/php-email-form/validate.js"></script>
+    
+
+    <!-- Template Main JS File -->
+    <script src="static/assets/js/main.js"></script>
+
+
+
+  </body>
+</html>
